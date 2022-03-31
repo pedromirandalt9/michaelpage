@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="body">
+
+		
+		<h:form id="formConsulta" prependId="false">
+			<a4j:keepAlive beanName="consultaBean" />
+			<div class="content">
+				<rich:panel>
+					
+
+					<div class="col-sm-12">
+						<div class="col-sm-3">
+							<a4j:outputPanel>
+							
+								<rich:dataTable id="resultados" rows="10" width="97%"
+												onRowMouseOver="this.style.backgroundColor='#ECF1F9'"
+												onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+												value="#{consultaBean.resultado}" var="resultado">
+
+												<rich:column styleClass="col-sm-12"
+													style="text-align:center;">
+													<h:outputText value="#{resultado.id_cliente}"
+														styleClass="texto" />
+												</rich:column>
+												
+												<rich:column style="text-align:center;">
+													<f:facet name="header">
+														<h:outputText value="Nombres"
+															styleClass="etiqueta" escape="false" />
+													</f:facet>
+													<h:outputText
+														value="#{resultado.primerNombre} #{resultado.segundoNombre}"
+														styleClass="texto" />
+												</rich:column>
+												<rich:column style="text-align:center;">
+													<f:facet name="header">
+														<h:outputText value="Primer Apellido"
+															styleClass="etiqueta" escape="false" />
+													</f:facet>
+													<h:outputText value="#{resultado.primerApellido}"
+														styleClass="texto">
+														<f:convertDateTime pattern="dd/MM/yyyy"
+															timeZone="#{preBean.timeZone}" />
+													</h:outputText>
+												</rich:column>
+											</rich:dataTable>
+								
+							</a4j:outputPanel>
+							
+						</div>
+
+					</div>
+					<br />
+				</rich:panel>
+			</div>
+
+
+		</h:form>
+		<a4j:status id="ajaxStatus"
+			onstart="#{rich:component('waitPanel')}.show('',{top:'350px', left:'650px',height:'20px', width:'20px'})"
+			onstop="#{rich:component('waitPanel')}.hide()" />
+		<rich:modalPanel id="waitPanel" autosized="true" width="250"
+			height="50">
+			<h:panelGrid columns="2" cellspacing="2" width="100%">
+			</h:panelGrid>
+		</rich:modalPanel>
+	</ui:define>
+</ui:composition>
